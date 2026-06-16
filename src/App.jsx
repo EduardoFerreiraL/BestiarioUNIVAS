@@ -227,7 +227,7 @@ function CatalogoPage() {
                   CA: {criatura.ca}, PV: {criatura.pv}, Des: {criatura.deslocamento}
                 </small>
                 
-                <Link to={`/monstro/${criatura.index}`} className="info-button" style={{ textDecoration: 'none', textAlign: 'center', display: 'block', marginTop: '10px', lineHeight: '21px' }}>
+                <Link to={`/monstro/${criatura.id}`} className="info-button" style={{ textDecoration: 'none', textAlign: 'center', display: 'block', marginTop: '10px', lineHeight: '21px' }}>
                   Ficha Completa
                 </Link>
               </div>
