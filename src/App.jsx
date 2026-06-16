@@ -1,18 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { listarCriaturas, listarOpcoesDeFiltro } from './services/bestiarioAPI'
 import './App.css'
 
-const criaturas = listarCriaturas()
 const filtrosIniciais = {
   nome: '',
   tipo: 'Todos',
   tamanho: 'Todos',
   nivelDesafio: 30,
 }
-const opcoesDeFiltro = {
-  tipo: listarOpcoesDeFiltro('tipo'),
-  tamanho: listarOpcoesDeFiltro('tamanho'),
-}
+
 const itensPorPagina = 9
 
 function normalizarTexto(valor) {
@@ -40,10 +36,41 @@ function criarSigla(nome) {
 }
 
 function App() {
+  const [criaturas, setCriaturas] = useState([]) // Guarda a lista vinda da API
+  const [carregando, setCarregando] = useState(true)
+
+  //M?el: passando p avisar que eue n altereei essa parte aqui
   const [filtros, setFiltros] = useState(filtrosIniciais)
   const [busca, setBusca] = useState('')
   const [paginaAtual, setPaginaAtual] = useState(1)
-  const [criaturaSelecionadaId, setCriaturaSelecionadaId] = useState(criaturas[0]?.id)
+
+  //M?el: só mudei o avlor q useState reecebe
+  const [criaturaSelecionadaId, setCriaturaSelecionadaId] = useState(null)
+  
+  // Inicio da mudança, Dispara o carregamento dos monstros assim que o site abre
+  useEffect(() => {
+    async function carregarMonstros() {
+      try {
+        setCarregando(true)
+        const dadosDaApi = await listarCriaturas(35) // Puxa os primeiros 35 monstros detalhados do D&D (m?l aqui, alterei p 100)
+        setCriaturas(dadosDaApi) // Salva no estado
+      } catch (erro) {
+        console.error("Erro ao carregar o bestiário da API:", erro)
+      } finally {
+        setCarregando(false) // Desliga a tela de carregamento
+      }
+    }
+    carregarMonstros()
+  }, [])
+
+  // Gera as opções de Tipo e Tamanho dinamicamente baseado nos monstros carregados da internet
+  const opcoesDeFiltro = useMemo(() => {
+    return {
+      tipo: listarOpcoesDeFiltro(criaturas, 'tipo'),
+      tamanho: listarOpcoesDeFiltro(criaturas, 'tamanho'),
+    }
+  }, [criaturas])
+  //aqui termina a nva adiçao, uma hr eu arrumo meu teeclado p parar d digitar tão eerrado / duplicado ou faltando
 
   const criaturasFiltradas = useMemo(() => {
     const buscaNormalizada = normalizarTexto(busca)
@@ -103,6 +130,14 @@ function App() {
     setBusca('')
     setPaginaAtual(1)
     setCriaturaSelecionadaId(criaturas[0]?.id)
+  }
+  
+  if (carregando) {
+    return (
+      <div style={{ color: '#ead8b8', padding: '50px', textAlign: 'center', fontFamily: 'sans-serif' }}>
+        <h2>Carregando grimório de criaturas do D&D 5e...</h2>
+      </div>
+    )
   }
 
   return (

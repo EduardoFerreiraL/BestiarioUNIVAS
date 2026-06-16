@@ -1,206 +1,45 @@
-const criaturas = [
-  {
-    id: 1,
-    nome: 'Adolescente Dragão Vermelho',
-    tipo: 'Dragão',
-    categoria: 'Dragão',
-    tamanho: 'Grande',
-    nivelDesafio: 10,
-    ca: 18,
-    pv: 178,
-    deslocamento: '12 m, voo 24 m',
-    tendencia: 'Caótico e mau',
-    bioma: 'Montanhas vulcânicas',
-    resumo: 'Dragão jovem, arrogante e territorial que transforma ruínas em covil.',
-    descricao:
-      'Um predador inteligente que prefere intimidar antes de atacar. Sua presença aquece túneis, cavernas e salões abandonados.',
-  },
-  {
-    id: 2,
-    nome: 'Beholder',
-    tipo: 'Aberração',
-    categoria: 'Aberração',
-    tamanho: 'Grande',
-    nivelDesafio: 13,
-    ca: 18,
-    pv: 180,
-    deslocamento: '0 m, voo 6 m',
-    tendencia: 'Leal e mau',
-    bioma: 'Subterrâneo',
-    resumo: 'Criatura paranoica com raios oculares e planos dentro de planos.',
-    descricao:
-      'Cada olho guarda uma ameaça diferente. Um encontro com Beholder quase sempre envolve terreno preparado e armadilhas.',
-  },
-  {
-    id: 3,
-    nome: 'Goblin',
-    tipo: 'Humanoide',
-    categoria: 'Humanoide',
-    tamanho: 'Pequeno',
-    nivelDesafio: 0.25,
-    ca: 15,
-    pv: 7,
-    deslocamento: '9 m',
-    tendencia: 'Neutro e mau',
-    bioma: 'Floresta sombria',
-    resumo: 'Saqueador pequeno, rápido e perigoso quando luta em grupo.',
-    descricao:
-      'Goblins evitam duelos justos. Preferem emboscadas, túneis estreitos e vantagem numérica.',
-  },
-  {
-    id: 4,
-    nome: 'Dracolich',
-    tipo: 'Morto-vivo',
-    categoria: 'Dragão, Morto-vivo',
-    tamanho: 'Enorme',
-    nivelDesafio: 17,
-    ca: 19,
-    pv: 225,
-    deslocamento: '12 m, voo 24 m',
-    tendencia: 'Leal e mau',
-    bioma: 'Necrópole',
-    resumo: 'Ossada dracônica movida por magia profana e memória antiga.',
-    descricao:
-      'A criatura combina a soberba de um dragão com a paciência cruel de um lich.',
-  },
-  {
-    id: 5,
-    nome: 'Gnoll Presa Sangrenta',
-    tipo: 'Humanoide',
-    categoria: 'Gnoll',
-    tamanho: 'Médio',
-    nivelDesafio: 1,
-    ca: 15,
-    pv: 22,
-    deslocamento: '9 m',
-    tendencia: 'Caótico e mau',
-    bioma: 'Planícies secas',
-    resumo: 'Caçador brutal que pressiona alvos feridos até a queda.',
-    descricao:
-      'Bandos de gnolls seguem rastros de batalha e atacam quando percebem fraqueza.',
-  },
-  {
-    id: 6,
-    nome: 'Elemental do Fogo',
-    tipo: 'Elemental',
-    categoria: 'Elemental',
-    tamanho: 'Grande',
-    nivelDesafio: 5,
-    ca: 13,
-    pv: 102,
-    deslocamento: '15 m',
-    tendencia: 'Neutro',
-    bioma: 'Plano Elemental',
-    resumo: 'Chama viva que atravessa frestas e incendeia tudo ao redor.',
-    descricao:
-      'Sua forma ondulante torna cercos comuns pouco eficientes. Água e contenção mágica são prioridades.',
-  },
-  {
-    id: 7,
-    nome: 'Mímico',
-    tipo: 'Monstruosidade',
-    categoria: 'Metamorfo',
-    tamanho: 'Médio',
-    nivelDesafio: 2,
-    ca: 12,
-    pv: 58,
-    deslocamento: '4,5 m',
-    tendencia: 'Neutro',
-    bioma: 'Masmorras',
-    resumo: 'Predador que assume forma de baús, portas e objetos desejáveis.',
-    descricao:
-      'O maior risco não é a força da mordida, mas a surpresa em corredores apertados.',
-  },
-  {
-    id: 8,
-    nome: 'Hidra',
-    tipo: 'Monstruosidade',
-    categoria: 'Monstruosidade',
-    tamanho: 'Enorme',
-    nivelDesafio: 8,
-    ca: 15,
-    pv: 172,
-    deslocamento: '9 m, natação 9 m',
-    tendencia: 'Neutro',
-    bioma: 'Pântanos',
-    resumo: 'Fera de múltiplas cabeças que pune grupos desorganizados.',
-    descricao:
-      'Cortar cabeças sem controlar a regeneração costuma piorar o combate rapidamente.',
-  },
-  {
-    id: 9,
-    nome: 'Lich',
-    tipo: 'Morto-vivo',
-    categoria: 'Morto-vivo, Conjurador',
-    tamanho: 'Médio',
-    nivelDesafio: 21,
-    ca: 17,
-    pv: 135,
-    deslocamento: '9 m',
-    tendencia: 'Qualquer maligno',
-    bioma: 'Torre arcana',
-    resumo: 'Arquimago imortal sustentado por filactério e magia necromântica.',
-    descricao:
-      'Um lich raramente entra em batalha sem contingências, lacaios e rotas de fuga.',
-  },
-  {
-    id: 10,
-    nome: 'Coruja-urso',
-    tipo: 'Monstruosidade',
-    categoria: 'Monstruosidade',
-    tamanho: 'Grande',
-    nivelDesafio: 3,
-    ca: 13,
-    pv: 59,
-    deslocamento: '12 m',
-    tendencia: 'Neutro',
-    bioma: 'Bosques antigos',
-    resumo: 'Predador feroz com corpo de urso e instintos de ave de rapina.',
-    descricao:
-      'Ataca com investidas curtas e violentas. Marcas de garras profundas denunciam seu território.',
-  },
-  {
-    id: 11,
-    nome: 'Basilisco',
-    tipo: 'Monstruosidade',
-    categoria: 'Reptiliano',
-    tamanho: 'Médio',
-    nivelDesafio: 3,
-    ca: 15,
-    pv: 52,
-    deslocamento: '6 m',
-    tendencia: 'Neutro',
-    bioma: 'Ruínas',
-    resumo: 'Réptil de olhar petrificante que transforma descuido em estátua.',
-    descricao:
-      'Exploradores experientes usam espelhos, cortinas ou combate indireto contra essa criatura.',
-  },
-  {
-    id: 12,
-    nome: 'Gelatina Cúbica',
-    tipo: 'Lodo',
-    categoria: 'Lodo',
-    tamanho: 'Grande',
-    nivelDesafio: 2,
-    ca: 6,
-    pv: 84,
-    deslocamento: '4,5 m',
-    tendencia: 'Sem alinhamento',
-    bioma: 'Masmorras',
-    resumo: 'Cubo transparente que limpa corredores e engole aventureiros distraídos.',
-    descricao:
-      'Sua transparência torna a criatura quase invisível em passagens mal iluminadas.',
-  },
-]
+import { mapMonsterFromApi } from '../utils/mapMonstros'
 
-export function listarCriaturas() {
-  return criaturas
+const BASE_URL = 'https://www.dnd5eapi.co/api'
+
+// Função auxiliar para validar as respostas da API
+async function parseResponse(res, msg) {
+  if (!res.ok) throw new Error(msg)
+  return res.json()
 }
 
-export function buscarCriaturaPorId(id) {
-  return criaturas.find((criatura) => criatura.id === Number(id))
+// 1. LISTAR CRIATURAS (Substitui sua função antiga)
+// Como buscar todos os monstros com detalhes de uma vez deixaria o site muito pesado, 
+// limitamos a buscar os primeiros 30 monstros detalhados por padrão para testes.
+export async function listarCriaturas(limit = 30) {
+  const listRes = await fetch(`${BASE_URL}/monsters`)
+  const listData = await parseResponse(listRes, 'Não foi possível carregar a lista de monstros.')
+  
+  // Pegamos apenas a quantidade definida no limite para não estourar a rede
+  const monstrosReduzidos = listData.results.slice(0, limit)
+
+  // Faz um fetch detalhado para cada monstro da lista e aplica o MAP
+  return Promise.all(
+    monstrosReduzidos.map(async (item) => {
+      const detRes = await fetch(`${BASE_URL}/monsters/${item.index}`)
+      const detData = await parseResponse(detRes, `Não foi possível carregar detalhes de ${item.name}.`)
+      return mapMonsterFromApi(detData)
+    })
+  )
 }
 
-export function listarOpcoesDeFiltro(campo) {
-  return [...new Set(criaturas.map((criatura) => criatura[campo]))].sort()
+// 2. BUSCAR CRIATURA POR ID / INDEX
+export async function buscarCriaturaPorId(id) {
+  const res = await fetch(`${BASE_URL}/monsters/${id}`)
+  if (res.status === 404) return null
+  const data = await parseResponse(res, 'Não foi possível carregar o monstro selecionado.')
+  return mapMonsterFromApi(data)
+}
+
+// 3. LISTAR OPÇÕES DE FILTRO
+// Como os dados agora são dinâmicos e assíncronos, precisamos passar a lista de criaturas carregadas
+// para extrair as opções do filtro.
+export function listarOpcoesDeFiltro(criaturasLista, campo) {
+  if (!criaturasLista || criaturasLista.length === 0) return []
+  return [...new Set(criaturasLista.map((criatura) => criatura[campo]))].sort()
 }
