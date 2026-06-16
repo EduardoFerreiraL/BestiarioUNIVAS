@@ -615,3 +615,37 @@
     justify-content: center;
   }
 }
+
+/*cod p arrumar o css da pagina titulo e a inicial*/
+.app-about__card .page-title {
+  font-size: 2.3rem;
+  color: #7a2021; 
+  margin: 0 0 10px 0;
+  font-family: Georgia, serif;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Garante que o texto corrido use a cor de tinta escura sobre o pergaminho */
+.app-about__card .page-text {
+  line-height: 1.7;
+  color: #2d2118; /* Cor oficial da tinta do seu pergaminho */
+  font-size: 1.1rem;
+}
+
+/* Destaca as tags strong dentro do texto com um marrom puxado para o ouro velho */
+.app-about__card .page-text strong {
+  color: #614624;
+  font-weight: 800;
+}
+
+/* Estiliza o link de voltar ou botões internos para conversar com o tema */
+.app-about__card .back-link {
+  color: #7a2021;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.app-about__card .back-link:hover {
+  text-decoration: underline;
+}

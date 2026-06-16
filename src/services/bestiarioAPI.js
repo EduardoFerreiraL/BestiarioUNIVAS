@@ -8,9 +8,14 @@ async function parseResponse(res, msg) {
   return res.json()
 }
 
-// 1. LISTAR CRIATURAS (Substitui sua função antiga)
-// Como buscar todos os monstros com detalhes de uma vez deixaria o site muito pesado, 
-// limitamos a buscar os primeiros 30 monstros detalhados por padrão para testes.
+/* 1. LISTAR CRIATURAS
+ buscar os 330 monstros da erro, sepá é pq a API dos caras bloqueia o acesso, então eu deixei o limite aqui p 60
+ se quiser alterar tem q ir lá em App.jsx -> const dadosDaApi = await listarCriaturas(60) e mudar o num no parentese
+ se aumentar p 80 ele demora 1-2 segundos p carregar a página mas vai, 100 ja tava mim bloqueando nessa bsota
+ mas se tu quiser, vai na fé Du, aumenta p quantidade q quiser
+
+ baixei dnv pq ta demorando uns 2 segundos p carregar no 60 e como eu so quero testar, uero velociodade
+*/
 export async function listarCriaturas(limit = 30) {
   const listRes = await fetch(`${BASE_URL}/monsters`)
   const listData = await parseResponse(listRes, 'Não foi possível carregar a lista de monstros.')
