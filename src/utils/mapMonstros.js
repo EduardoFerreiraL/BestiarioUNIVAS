@@ -61,6 +61,7 @@ export function mapMonsterFromApi(apiData) {
     tendencia,
     bioma: 'Desconhecido', // A API de D&D 5e infelizmente não lista biomas diretamente no JSON de monstros
     resumo: `${tipo} ${tamanho}. Nível de Desafio ${apiData.challenge_rating}.`,
+    imageUrl,
     descricao: '' // Será preenchida em detalhes se necessário, ou gerada dinamicamente
   }
 }
