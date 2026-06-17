@@ -1,12 +1,17 @@
 import { useMemo, useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { listarCriaturas, listarOpcoesDeFiltro } from './services/bestiarioAPI'
 import './App.css'
 
-// Importando as páginas de dentro da pasta pages
+// Páginas
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import MonstrosDetailPage from './pages/MonstrosDetailPage'
+import NotFoundPage from './pages/NotFoundPage'
+
+// Componentes Reutilizáveis Isolados
+import Header from './components/Header'
+import MonsterCard from './components/MonsterCard'
 
 const filtrosIniciais = {
   nome: '',
@@ -24,54 +29,12 @@ function normalizarTexto(valor) {
     .replace(/[\u0300-\u036f]/g, '')
 }
 
-function formatarNivelDesafio(nivelDesafio) {
-  if (nivelDesafio === 0.125) return '1/8'
-  if (nivelDesafio === 0.25) return '1/4'
-  if (nivelDesafio === 0.5) return '1/2'
-  return String(nivelDesafio)
-}
-
-function criarSigla(nome) {
-  return nome
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((parte) => parte[0])
-    .join('')
-    .toUpperCase()
-}
-
-function CreaturePortrait({ criatura }) {
-  const [imageFailed, setImageFailed] = useState(false)
-  const portraitClass = `portrait portrait-${(criatura.id.length % 6) + 1}`
-
-  if (!criatura.imageUrl || imageFailed) {
-    return (
-      <span className={portraitClass}>
-        {criarSigla(criatura.nome)}
-      </span>
-    )
-  }
-
-  return (
-    <img
-      className="portrait-image"
-      src={criatura.imageUrl}
-      alt={criatura.nome}
-      loading="lazy"
-      onError={() => setImageFailed(true)}
-    />
-  )
-}
-
-// 🚀 O CATÁLOGO AGORA CONTÉM APENAS OS FILTROS E A GRID (O pergaminho e o topo saíram daqui)
 function CatalogoPage() {
   const [criaturas, setCriaturas] = useState([]) 
   const [carregando, setCarregando] = useState(true)
   const [filtros, setFiltros] = useState(filtrosIniciais)
   const [busca, setBusca] = useState('')
   const [paginaAtual, setPaginaAtual] = useState(1)
-  const [criaturaSelecionadaId, setCriaturaSelecionadaId] = useState(null)
   
   useEffect(() => {
     async function carregarMonstros() {
@@ -129,10 +92,7 @@ function CatalogoPage() {
   )
 
   function atualizarFiltro(campo, valor) {
-    setFiltros((filtrosAtuais) => ({
-      ...filtrosAtuais,
-      [campo]: valor,
-    }))
+    setFiltros((filtrosAtuais) => ({ ...filtrosAtuais, [campo]: valor }))
     setPaginaAtual(1)
   }
 
@@ -229,26 +189,7 @@ function CatalogoPage() {
       <section className="creature-grid" aria-label="Lista de criaturas">
         {criaturasPaginadas.length > 0 ? (
           criaturasPaginadas.map((criatura) => (
-            <article className="monster-card" key={criatura.id}>
-              <div className="monster-portrait">
-                <span className="challenge-badge">
-                  ND
-                  <strong>{formatarNivelDesafio(criatura.nivelDesafio)}</strong>
-                </span>
-                <CreaturePortrait criatura={criatura} />
-              </div>
-
-              <div className="monster-content">
-                <h2>{criatura.nome}</h2>
-                <strong>
-                  {criatura.tipo}, {criatura.tamanho}
-                </strong> 
-                
-                <Link to={`/monstro/${criatura.id}`} className="info-button" style={{ textDecoration: 'none', textAlign: 'center', display: 'block', marginTop: '10px', lineHeight: '21px' }}>
-                  Ficha Completa
-                </Link>
-              </div>
-            </article>
+            <MonsterCard key={criatura.id} criatura={criatura} />
           ))
         ) : (
           <div className="empty-state">
@@ -260,8 +201,7 @@ function CatalogoPage() {
 
       <footer className="catalog-footer">
         <span>
-          Mostrando {criaturasPaginadas.length} de {criaturasFiltradas.length}{' '}
-          criaturas...
+          Mostrando {criaturasPaginadas.length} de {criaturasFiltradas.length} criaturas...
         </span>
 
         <div className="pagination" aria-label="Paginação">
@@ -285,15 +225,11 @@ function CatalogoPage() {
             ),
           )}
           <span>...</span>
-          <button type="button" disabled>
-            30
-          </button>
+          <button type="button" disabled>30</button>
           <button
             type="button"
             disabled={paginaAtual === totalPaginas}
-            onClick={() =>
-              setPaginaAtual((pagina) => Math.min(totalPaginas, pagina + 1))
-            }
+            onClick={() => setPaginaAtual((pagina) => Math.min(totalPaginas, pagina + 1))}
           >
             ›
           </button>
@@ -303,42 +239,24 @@ function CatalogoPage() {
   )
 }
 
-// 🚀 O COMPONENTE PRINCIPAL AGORA É UM "ESQUELETO FIXO"
-// Ele renderiza o fundo azul escuro (.bestiary-page), o topo (.topbar) e o papel claro (.scroll-frame).
-// As rotas determinam apenas o CONTEÚDO que vai renderizar DENTRO do pergaminho.
 function App() {
   return (
     <BrowserRouter>
       <div className="bestiary-page">
         
-        {/* O Cabeçalho agora está FIXO no topo para todas as páginas */}
-        <header className="topbar">
-          <Link className="brand" to="/">
-            <span className="brand-mark">20</span>
-            <span>
-              <strong>Bestiário</strong>
-              <small>Criaturas de D&amp;D 5e</small>
-            </span>
-          </Link>
+        {/* Usando o componente Header extraído */}
+        <Header />
 
-          <nav className="main-nav" aria-label="Navegação principal">
-            <Link to="/">Início</Link>
-            <Link to="/monstros">Catálogo</Link>
-            <Link to="/sobre">Sobre</Link>
-          </nav>
-        </header>
-
-        {/* O papel de pergaminho agora está FIXO envolvendo todas as páginas do sistema */}
         <main className="scroll-frame">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/monstros" element={<CatalogoPage />} />
             <Route path="/sobre" element={<AboutPage />} />
             <Route path="/monstro/:id" element={<MonstrosDetailPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
 
-        {/* Detalhes visuais fixos do fundo azul */}
         <span className="corner corner-left" aria-hidden="true"></span>
         <span className="corner corner-right" aria-hidden="true"></span>
       </div>
