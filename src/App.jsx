@@ -41,6 +41,29 @@ function criarSigla(nome) {
     .toUpperCase()
 }
 
+function CreaturePortrait({ criatura }) {
+  const [imageFailed, setImageFailed] = useState(false)
+  const portraitClass = `portrait portrait-${(criatura.id.length % 6) + 1}`
+
+  if (!criatura.imageUrl || imageFailed) {
+    return (
+      <span className={portraitClass}>
+        {criarSigla(criatura.nome)}
+      </span>
+    )
+  }
+
+  return (
+    <img
+      className="portrait-image"
+      src={criatura.imageUrl}
+      alt={criatura.nome}
+      loading="lazy"
+      onError={() => setImageFailed(true)}
+    />
+  )
+}
+
 // 🚀 O CATÁLOGO AGORA CONTÉM APENAS OS FILTROS E A GRID (O pergaminho e o topo saíram daqui)
 function CatalogoPage() {
   const [criaturas, setCriaturas] = useState([]) 
@@ -212,20 +235,14 @@ function CatalogoPage() {
                   ND
                   <strong>{formatarNivelDesafio(criatura.nivelDesafio)}</strong>
                 </span>
-                <span className={`portrait portrait-${(criatura.id % 6) + 1}`}>
-                  {criarSigla(criatura.nome)}
-                </span>
+                <CreaturePortrait criatura={criatura} />
               </div>
 
               <div className="monster-content">
                 <h2>{criatura.nome}</h2>
                 <strong>
                   {criatura.tipo}, {criatura.tamanho}
-                </strong>
-                <p>{criatura.resumo}</p>
-                <small>
-                  CA: {criatura.ca}, PV: {criatura.pv}, Des: {criatura.deslocamento}
-                </small>
+                </strong> 
                 
                 <Link to={`/monstro/${criatura.id}`} className="info-button" style={{ textDecoration: 'none', textAlign: 'center', display: 'block', marginTop: '10px', lineHeight: '21px' }}>
                   Ficha Completa
