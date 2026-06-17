@@ -48,6 +48,17 @@ export function mapMonsterFromApi(apiData) {
     ? `https://www.dnd5eapi.co${apiData.image}`
     : null // Se não tiver imagem na API, seu React pode exibir a sigla do monstro
 
+    //tentando ver se consegue puaxr a descrição
+  let descricaoReal = `Uma criatura do tipo ${tipo} (${tamanho}), com alinhamento ${tendencia}.`
+
+  if (apiData.desc) {
+    if (Array.isArray(apiData.desc)) {
+      descricaoReal = apiData.desc.join(' ')
+    } else if (typeof apiData.desc === 'string') {
+      descricaoReal = apiData.desc
+    }
+  }
+
   return {
     id: apiData.index, // Usamos o "index" da API (ex: "acolyte", "adult-red-dragon") como ID único textual
     nome: apiData.name, // Alguns nomes você pode traduzir manualmente se quiser, mas aqui mantemos o padrão da API
@@ -62,6 +73,7 @@ export function mapMonsterFromApi(apiData) {
     bioma: 'Desconhecido', // A API de D&D 5e infelizmente não lista biomas diretamente no JSON de monstros
     resumo: `${tipo} ${tamanho}. Nível de Desafio ${apiData.challenge_rating}.`,
     imageUrl,
-    descricao: '' // Será preenchida em detalhes se necessário, ou gerada dinamicamente
+
+    descricao: descricaoReal // Será preenchida em detalhes se necessário, ou gerada dinamicamente
   }
 }
