@@ -139,7 +139,7 @@ function MonstrosDetailPage() {
 
             <div style={{ textAlign: 'left', marginTop: '20px' }}>
               <h3 style={{ color: 'var(--gold)' }}>Descrição do Bestiário:</h3>
-              <p style={{ lineHeight: '1.6', color: '#ead8b8' }}>
+              <p style={{ lineHeight: '1.6', color: '#614624' }}>
                 {monstro.descricao || "Esta criatura é um mistério selvagem. Os detalhes de suas ações e lore adicionais podem ser consultados diretamente nos manuais oficiais de D&D 5e."}
               </p>
             </div>
