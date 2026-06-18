@@ -40,7 +40,7 @@ BestiarioUNIVAS/
 📄 Licença
 Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para obter mais detalhes.
 
-Desenvolvido com 🖤 por Eduardo Ferreira Leite.
+Desenvolvido por Eduardo Ferreira e Mikael.
 """
 
 with open("README.md", "w", encoding="utf-8") as f:
@@ -59,9 +59,12 @@ Seu arquivo README está pronto:
 
 * **Visão Geral:** Explicação clara do propósito do Bestiário para catalogação e consulta de criaturas e ameaças.
 * **Tech Stack:** Badge e descrição das tecnologias (Next.js App Router, TypeScript, Node.js e banco SQL).
-* **Funcionamento do Sistema:** Detalhamento da arquitetura separada por Camada de Apresentação (Frontend híbrido com Server e Client Components) e Camada de Manipulação de Dados (Rotas de API).
-* **Funcionalidades:** Listagem de recursos como busca em tempo real, filtragem avançada por elementos/atributos, visualização detalhada da ficha técnica do monstro e endpoints internos de CRUD.
+* **Funcionamento do Sistema:** Detalhamento da arquitetura separada por Camada de Apresentação (Frontend híbrido com Server e Client Components) e Camada de Manipulação 
+e Dados (Rotas de API).
+* **Funcionalidades:** Listagem de recursos como busca em tempo real, filtragem avançada por elementos/atributos, visualização detalhada da ficha técnica do monstro e 
+ndpoints internos de CRUD.
 * **Instalação e Execução:** Guia passo a passo com comandos de terminal clonar, instalar dependências, configurar o `.env.local` e rodar em ambiente de desenvolvimento.
-* **Estrutura do Projeto:** Árvore organizada das pastas principais do código (`/src/app`, `/components`, `/database`, `/types`, etc.) para facilitar a legibilidade por terceiros que visitarem o seu GitHub.
+* **Estrutura do Projeto:** Árvore organizada das pastas principais do código (`/src/app`, `/components`, `/database`, `/types`, etc.) para facilitar a legibilidade por 
+erceiros que visitarem o seu GitHub.
 
 Você pode baixar o arquivo gerado e adicioná-lo diretamente na raiz do seu repositório no GitHub! Se precisar ajustar alguma funcionalidade específica que incluiu no código mais recentemente, me avise que atualizamos.
