@@ -8,29 +8,35 @@ async function parseResponse(res, msg) {
   return res.json()
 }
 
+let indiceMonstrosCache = null
+
+async function obterIndiceMonstros() {
+  if (!indiceMonstrosCache) {
+    const listRes = await fetch(`${BASE_URL}/monsters`)
+    indiceMonstrosCache = await parseResponse(listRes, 'Não foi possível carregar a lista de monstros.')
+  }
+  return indiceMonstrosCache
+}
+
 /* 1. LISTAR CRIATURAS
- buscar os 330 monstros da erro, sepá é pq a API dos caras bloqueia o acesso, então eu deixei o limite aqui p 60
- se quiser alterar tem q ir lá em App.jsx -> const dadosDaApi = await listarCriaturas(60) e mudar o num no parentese
- se aumentar p 80 ele demora 1-2 segundos p carregar a página mas vai, 100 ja tava mim bloqueando nessa bsota
- mas se tu quiser, vai na fé Du, aumenta p quantidade q quiser
-
- baixei dnv pq ta demorando uns 2 segundos p carregar no 60 e como eu so quero testar, uero velociodade
+ Busca o índice completo uma vez (cache) e carrega os detalhes apenas do lote da página atual.
+ Ex.: listarCriaturas(1, 30) → criaturas 1–30; listarCriaturas(2, 30) → criaturas 31–60.
+ Evita estourar a rede com centenas de fetches de uma só vez.
 */
-export async function listarCriaturas(limit = 30) {
-  const listRes = await fetch(`${BASE_URL}/monsters`)
-  const listData = await parseResponse(listRes, 'Não foi possível carregar a lista de monstros.')
-  
-  // Pegamos apenas a quantidade definida no limite para não estourar a rede
-  const monstrosReduzidos = listData.results.slice(0, limit)
+export async function listarCriaturas(pagina = 1, porPagina = 30) {
+  const { count, results } = await obterIndiceMonstros()
+  const inicio = (pagina - 1) * porPagina
+  const lote = results.slice(inicio, inicio + porPagina)
 
-  // Faz um fetch detalhado para cada monstro da lista e aplica o MAP
-  return Promise.all(
-    monstrosReduzidos.map(async (item) => {
+  const criaturas = await Promise.all(
+    lote.map(async (item) => {
       const detRes = await fetch(`${BASE_URL}/monsters/${item.index}`)
       const detData = await parseResponse(detRes, `Não foi possível carregar detalhes de ${item.name}.`)
       return mapMonsterFromApi(detData)
     })
   )
+
+  return { criaturas, total: count }
 }
 
 // 2. BUSCAR CRIATURA POR ID / INDEX

@@ -20,7 +20,7 @@ const filtrosIniciais = {
   nivelDesafio: 30,
 }
 
-const itensPorPagina = 9
+const itensPorPagina = 30
 
 function normalizarTexto(valor) {
   return String(valor)
@@ -32,6 +32,7 @@ function normalizarTexto(valor) {
 function CatalogoPage() {
   const [criaturas, setCriaturas] = useState([]) 
   const [carregando, setCarregando] = useState(true)
+  const [totalMonstros, setTotalMonstros] = useState(0)
   const [filtros, setFiltros] = useState(filtrosIniciais)
   const [busca, setBusca] = useState('')
   const [paginaAtual, setPaginaAtual] = useState(1)
@@ -40,8 +41,10 @@ function CatalogoPage() {
     async function carregarMonstros() {
       try {
         setCarregando(true)
-        const dadosDaApi = await listarCriaturas(30)
-        setCriaturas(dadosDaApi) 
+        const { criaturas: dadosDaApi, total } = await listarCriaturas(paginaAtual, itensPorPagina)
+        setCriaturas(dadosDaApi)
+        setTotalMonstros(total)
+        window.scrollTo(0, 0)
       } catch (erro) {
         console.error("Erro ao carregar o bestiário da API:", erro)
       } finally {
@@ -49,7 +52,7 @@ function CatalogoPage() {
       }
     }
     carregarMonstros()
-  }, [])
+  }, [paginaAtual])
 
   const opcoesDeFiltro = useMemo(() => {
     return {
@@ -85,11 +88,9 @@ function CatalogoPage() {
     })
   }, [busca, filtros, criaturas])
 
-  const totalPaginas = Math.max(1, Math.ceil(criaturasFiltradas.length / itensPorPagina))
-  const criaturasPaginadas = criaturasFiltradas.slice(
-    (paginaAtual - 1) * itensPorPagina,
-    paginaAtual * itensPorPagina,
-  )
+  const totalPaginas = Math.max(1, Math.ceil(totalMonstros / itensPorPagina))
+  const indiceInicio = (paginaAtual - 1) * itensPorPagina + 1
+  const indiceFim = Math.min(paginaAtual * itensPorPagina, totalMonstros)
 
   function atualizarFiltro(campo, valor) {
     setFiltros((filtrosAtuais) => ({ ...filtrosAtuais, [campo]: valor }))
@@ -187,8 +188,8 @@ function CatalogoPage() {
       </section>
 
       <section className="creature-grid" aria-label="Lista de criaturas">
-        {criaturasPaginadas.length > 0 ? (
-          criaturasPaginadas.map((criatura) => (
+        {criaturasFiltradas.length > 0 ? (
+          criaturasFiltradas.map((criatura) => (
             <MonsterCard key={criatura.id} criatura={criatura} />
           ))
         ) : (
@@ -201,7 +202,7 @@ function CatalogoPage() {
 
       <footer className="catalog-footer">
         <span>
-          Mostrando {criaturasPaginadas.length} de {criaturasFiltradas.length} criaturas...
+          Mostrando {indiceInicio}–{indiceFim} de {totalMonstros} criaturas
         </span>
 
         <div className="pagination" aria-label="Paginação">
@@ -224,8 +225,6 @@ function CatalogoPage() {
               </button>
             ),
           )}
-          <span>...</span>
-          <button type="button" disabled>30</button>
           <button
             type="button"
             disabled={paginaAtual === totalPaginas}
