@@ -28,6 +28,7 @@ BestiarioUNIVAS/
 
 
 ├── src/
+
 │   ├── app/            # Rotas da aplicação (App Router) e API Routes
 
 │   ├── components/     # Componentes visuais e reutilizáveis da interface
