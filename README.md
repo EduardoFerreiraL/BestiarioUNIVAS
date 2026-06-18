@@ -23,8 +23,7 @@ yarn dev
 Acessar a Aplicação:
 Abra o seu navegador e acesse http://localhost:3000 para visualizar o projeto em execução.
 
-📂 Estrutura de Pastas Simplificada
-Plaintext
+## 📂 Estrutura de Pastas Simplificada
 BestiarioUNIVAS/
 ├── src/
 │   ├── app/            # Rotas da aplicação (App Router) e API Routes
