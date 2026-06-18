@@ -1,82 +1,74 @@
-Instalar as Dependências:
+# Bestiário D&D 5e
 
-Bash
+## Alunos
+
+* Eduardo Leite
+* Mikael Augusto
+
+## API Utilizada
+
+Este projeto utiliza a API pública **D&D 5e API**, responsável por fornecer informações sobre monstros, criaturas e demais elementos do universo de Dungeons & Dragons 5ª Edição.
+
+## Instalação e Execução
+
+### Pré-requisitos
+
+* Node.js instalado (versão 18 ou superior recomendada)
+* npm instalado
+
+### Passos para executar localmente
+
+1. Clone o repositório ou extraia os arquivos do projeto.
+
+2. Acesse a pasta do projeto:
+
+```bash
+cd BestiarioUnivas/
+```
+
+3. Instale as dependências:
+
+```bash
 npm install
-# ou
-yarn install
-Configuração das Variáveis de Ambiente:
-Crie um arquivo .env.local na raiz do projeto e configure a URL do seu banco de dados e outras variáveis necessárias:
+```
 
-Snippet de código
-DATABASE_URL="sua_string_de_conexao_sql_aqui"
-NEXT_PUBLIC_API_URL="http://localhost:3000/api"
-Executar as Migrations do Banco (se aplicável):
+4. Execute o projeto em modo de desenvolvimento:
 
-Bash
-npm run db:push # ou o comando correspondente do seu ORM
-Iniciar o Servidor de Desenvolvimento:
-
-Bash
+```bash
 npm run dev
-# ou
-yarn dev
-Acessar a Aplicação:
-Abra o seu navegador e acesse http://localhost:3000 para visualizar o projeto em execução.
+```
 
-## 📂 Estrutura de Pastas Simplificada
-BestiarioUNIVAS/
+5. Abra o navegador no endereço informado pelo Vite (normalmente):
 
+```text
+http://localhost:5173
+```
 
-├── src/
+## Funcionalidades Implementadas
 
-│   ├── app/            # Rotas da aplicação (App Router) e API Routes
+* Consulta de monstros diretamente da API D&D 5e.
+* Listagem paginada de criaturas.
+* Busca de monstros por nome.
+* Filtros por:
 
-│   ├── components/     # Componentes visuais e reutilizáveis da interface
+  * Tipo da criatura;
+  * Tamanho;
+  * Nível de Desafio (ND).
+* Página de detalhes para cada monstro.
+* Navegação entre páginas utilizando React Router.
+* Tratamento de estados de carregamento e erro.
+* Interface temática inspirada em bestiários de fantasia.
 
-│   ├── database/       # Configuração de conexão e esquemas do banco de dados SQL
+## Tecnologias Utilizadas
 
-│   ├── hooks/          # Hooks customizados para gerenciamento de estado e fetches
+* React
+* Vite
+* React Router DOM
+* JavaScript (ES6+)
+* CSS
 
-│   ├── types/          # Definições de tipos TypeScript (Interfaces de Criaturas, Atributos)
+## Documentação da API
 
-│   └── utils/          # Funções utilitárias e formatadores
+Documentação oficial da D&D 5e API:
 
-├── public/             # Arquivos estáticos (imagens, ícones dos elementos)
-
-├── .env.local.example  # Exemplo de configuração de ambiente
-
-├── package.json        # Dependências e scripts do projeto
-
-└── README.md           # Documentação do projeto
-
-📄 Licença
-Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para obter mais detalhes.
-
-Desenvolvido por Eduardo Ferreira e Mikael.
-"""
-
-with open("README.md", "w", encoding="utf-8") as f:
-f.write(readme_content)
-
-print("README.md successfully generated!")
-
-Aqui está um arquivo `README.md` completo, profissional e estruturado especificamente para o seu projeto **BestiarioUNIVAS**. 
-
-Ele foi desenvolvido considerando uma arquitetura moderna e escalável (Next.js, TypeScript e SQL), detalhando de forma clara o fluxo de funcionamento, as principais funcionalidades e o passo a passo para configuração local.
-
-Seu arquivo README está pronto:
-[file-tag: code-generated-file-0-1781808869060942872]
-
-### Conteúdo incluído no documento:
-
-* **Visão Geral:** Explicação clara do propósito do Bestiário para catalogação e consulta de criaturas e ameaças.
-* **Tech Stack:** Badge e descrição das tecnologias (Next.js App Router, TypeScript, Node.js e banco SQL).
-* **Funcionamento do Sistema:** Detalhamento da arquitetura separada por Camada de Apresentação (Frontend híbrido com Server e Client Components) e Camada de Manipulação 
-e Dados (Rotas de API).
-* **Funcionalidades:** Listagem de recursos como busca em tempo real, filtragem avançada por elementos/atributos, visualização detalhada da ficha técnica do monstro e 
-ndpoints internos de CRUD.
-* **Instalação e Execução:** Guia passo a passo com comandos de terminal clonar, instalar dependências, configurar o `.env.local` e rodar em ambiente de desenvolvimento.
-* **Estrutura do Projeto:** Árvore organizada das pastas principais do código (`/src/app`, `/components`, `/database`, `/types`, etc.) para facilitar a legibilidade por 
-erceiros que visitarem o seu GitHub.
-
-Você pode baixar o arquivo gerado e adicioná-lo diretamente na raiz do seu repositório no GitHub! Se precisar ajustar alguma funcionalidade específica que incluiu no código mais recentemente, me avise que atualizamos.
+https://www.dnd5eapi.co/docs/
