@@ -25,17 +25,29 @@ Abra o seu navegador e acesse http://localhost:3000 para visualizar o projeto em
 
 ## 📂 Estrutura de Pastas Simplificada
 BestiarioUNIVAS/
+
+
 ├── src/
 │   ├── app/            # Rotas da aplicação (App Router) e API Routes
+
 │   ├── components/     # Componentes visuais e reutilizáveis da interface
+
 │   ├── database/       # Configuração de conexão e esquemas do banco de dados SQL
+
 │   ├── hooks/          # Hooks customizados para gerenciamento de estado e fetches
+
 │   ├── types/          # Definições de tipos TypeScript (Interfaces de Criaturas, Atributos)
+
 │   └── utils/          # Funções utilitárias e formatadores
+
 ├── public/             # Arquivos estáticos (imagens, ícones dos elementos)
+
 ├── .env.local.example  # Exemplo de configuração de ambiente
+
 ├── package.json        # Dependências e scripts do projeto
+
 └── README.md           # Documentação do projeto
+
 📄 Licença
 Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para obter mais detalhes.
 
